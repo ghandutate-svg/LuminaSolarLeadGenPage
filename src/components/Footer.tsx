@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, AlertTriangle } from 'lucide-react';
 
 interface FooterProps {
   onRequestAssessment: () => void;
@@ -28,13 +28,22 @@ export function Footer({ onRequestAssessment }: FooterProps) {
   return (
     <>
       <motion.section
-        className="py-20 bg-slate-900 text-white"
+        id="cta"
+        className="py-24 bg-slate-900 text-white"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-100px' }}
         variants={containerVariants}
       >
         <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-solar-amber/10 border border-solar-amber/20 rounded-full mb-8"
+          >
+            <AlertTriangle className="w-4 h-4 text-solar-amber" strokeWidth={1.5} />
+            <span className="text-sm font-medium text-solar-amber">Limited 2026 Availability</span>
+          </motion.div>
+
           <motion.h2
             variants={itemVariants}
             className="text-4xl md:text-5xl font-bold mb-6"
@@ -44,18 +53,18 @@ export function Footer({ onRequestAssessment }: FooterProps) {
 
           <motion.p
             variants={itemVariants}
-            className="text-xl text-gray-300 mb-8 leading-relaxed"
+            className="text-xl text-gray-300 mb-10 leading-relaxed"
           >
-            Secure your rate today and lock in federal tax incentives before they decline. Starting next year, the Investment Tax Credit decreases annually.
+            Lock in federal tax incentives before the Investment Tax Credit decreases next year.
           </motion.p>
 
           <motion.button
             variants={itemVariants}
             onClick={onRequestAssessment}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-solar-amber text-slate-900 font-semibold rounded-lg hover:bg-refined-gold transition-colors duration-200"
+            className="inline-flex items-center gap-2 px-10 py-5 solar-gradient text-slate-900 font-semibold rounded-lg hover:shadow-lg hover:shadow-solar-amber/25 transition-all duration-300 text-lg group"
           >
             Request Your Solar Assessment
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
           </motion.button>
         </div>
       </motion.section>

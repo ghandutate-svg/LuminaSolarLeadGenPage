@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
@@ -28,32 +28,33 @@ export function FAQ() {
     {
       question: 'Does it work when it\'s cloudy?',
       answer:
-        'Yes. Our panels feature advanced spectral sensitivity technology that captures energy across the full light spectrum, including diffuse light on cloudy days. On average, systems generate 10-25% of their peak output even in cloudy conditions.',
+        'Yes. Our panels capture energy across the full light spectrum, including diffuse light. Systems still generate 10-25% of peak output on overcast days.',
     },
     {
       question: 'What about roof damage?',
       answer:
-        'Our Roof-Shield 10-year leak warranty provides complete protection. We use non-penetrating mounting systems that distribute load evenly, protecting your roof structure. If any leaks occur during installation or operation, we cover all repairs.',
+        'Our Roof-Shield 10-year warranty covers any leaks. We use non-penetrating mounting that distributes load evenly, and we cover all repairs if anything goes wrong.',
     },
     {
       question: 'Is there really $0 upfront?',
       answer:
-        'Absolutely. We offer multiple financing options with no upfront costs. You can choose traditional loans, leases, or power-purchase agreements. Most customers see positive cash flow from month one when accounting for electricity bill savings.',
+        'Absolutely. Choose from loans, leases, or power-purchase agreements with no upfront cost. Most customers see positive cash flow from month one.',
     },
     {
       question: 'How long does installation take?',
       answer:
-        'A typical residential installation takes 1-3 days depending on system size and roof complexity. We handle all permitting and inspections. You\'ll be generating clean energy within weeks of signing.',
+        '1-3 days for a typical residential install. We handle all permitting and inspections, and you\'ll be generating clean energy within weeks of signing.',
     },
     {
       question: 'What about maintenance?',
       answer:
-        'Solar panels are virtually maintenance-free. Most systems need a cleaning once or twice per year. Our monitoring app alerts you to any issues instantly, and our support team is available 24/7 for any questions.',
+        'Virtually maintenance-free. Most systems need a cleaning once or twice a year, and our monitoring app alerts you to any issues instantly.',
     },
   ];
 
   return (
     <motion.section
+      id="faq"
       className="py-20 bg-cool-gray"
       initial="hidden"
       whileInView="visible"
@@ -81,11 +82,11 @@ export function FAQ() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="border border-slate-200 rounded-lg overflow-hidden bg-white"
+              className="border border-slate-200 rounded-xl overflow-hidden bg-white hover:border-solar-amber/20 transition-colors duration-300"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
-                className="w-full flex items-center justify-between p-6 hover:bg-cool-gray transition-colors duration-200"
+                className="w-full flex items-center justify-between p-6 hover:bg-cool-gray/50 transition-colors duration-200"
               >
                 <span className="text-lg font-semibold text-slate-900 text-left">
                   {faq.question}
@@ -98,19 +99,21 @@ export function FAQ() {
                 />
               </button>
 
-              {openIndex === index && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="border-t border-slate-200"
-                >
-                  <div className="p-6 text-muted leading-relaxed">
-                    {faq.answer}
-                  </div>
-                </motion.div>
-              )}
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="border-t border-slate-200"
+                  >
+                    <div className="p-6 text-muted leading-relaxed">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>

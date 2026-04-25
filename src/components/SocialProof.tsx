@@ -1,5 +1,30 @@
-import { motion } from 'framer-motion';
+import { motion, useSpring, useTransform, useMotionValue } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { Award, CheckCircle, Zap } from 'lucide-react';
+
+function CountUpNumber({ target, suffix = '' }: { target: number; suffix?: string }) {
+  const motionValue = useMotionValue(0);
+  const spring = useSpring(motionValue, { stiffness: 80, damping: 25 });
+  const display = useTransform(spring, (v: number) => `${Math.round(v).toLocaleString()}${suffix}`);
+  const ref = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          motionValue.set(target);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target, motionValue, hasAnimated]);
+
+  return <motion.div ref={ref}>{display}</motion.div>;
+}
 
 export function SocialProof() {
   const containerVariants = {
@@ -23,6 +48,7 @@ export function SocialProof() {
 
   return (
     <motion.section
+      id="social-proof"
       className="py-16 bg-cool-gray border-y border-slate-200"
       initial="hidden"
       whileInView="visible"
@@ -59,7 +85,9 @@ export function SocialProof() {
           </motion.div>
 
           <motion.div variants={itemVariants} className="text-center md:text-left">
-            <div className="text-2xl font-bold text-slate-900">25 Years</div>
+            <div className="text-2xl font-bold text-slate-900">
+              <CountUpNumber target={25} suffix=" Years" />
+            </div>
             <div className="text-sm text-muted">Performance Warranty</div>
           </motion.div>
 
@@ -77,7 +105,9 @@ export function SocialProof() {
           </motion.div>
 
           <motion.div variants={itemVariants} className="text-center md:text-left">
-            <div className="text-2xl font-bold text-slate-900">12K+</div>
+            <div className="text-2xl font-bold text-slate-900">
+              <CountUpNumber target={12} suffix="K+" />
+            </div>
             <div className="text-sm text-muted">Homes Powered</div>
           </motion.div>
         </div>

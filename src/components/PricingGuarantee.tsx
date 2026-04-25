@@ -23,6 +23,7 @@ export function PricingGuarantee() {
 
   return (
     <motion.section
+      id="guarantee"
       className="py-20 bg-white"
       initial="hidden"
       whileInView="visible"
@@ -35,41 +36,42 @@ export function PricingGuarantee() {
             Zero Down. Immediate ROI.
           </h2>
           <p className="text-xl text-muted leading-relaxed">
-            Finance your solar system with flexible payment options. Your monthly savings typically exceed your solar payment from day one.
+            Your monthly savings typically exceed your solar payment from day one.
           </p>
         </motion.div>
 
         <motion.div
           variants={itemVariants}
-          className="bg-cool-gray border-2 border-solar-amber/20 rounded-lg p-10 md:p-12"
+          className="relative bg-cool-gray border-2 border-solar-amber/20 rounded-xl p-10 md:p-12 overflow-hidden"
         >
-          <div className="flex items-start gap-4 mb-6">
+          <div className="absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-solar-amber/5 to-transparent" />
+          <div className="relative flex items-start gap-4 mb-6">
             <Shield className="w-8 h-8 text-solar-amber flex-shrink-0 mt-1" strokeWidth={1.5} />
             <div className="text-left">
               <h3 className="text-2xl font-bold text-slate-900 mb-3">
                 The Lumina Production Guarantee
               </h3>
               <p className="text-lg text-muted leading-relaxed">
-                If your system produces less than we promised, we'll pay you the difference in cash. That's our commitment to your energy independence.
+                If your system underproduces, we pay you the difference in cash.
               </p>
             </div>
           </div>
         </motion.div>
 
         <motion.div variants={itemVariants} className="mt-12 grid md:grid-cols-3 gap-6">
-          <div className="p-6 border border-slate-200 rounded-lg">
+          <div className="p-6 border border-slate-200 rounded-xl hover:border-solar-amber/20 hover:shadow-sm transition-all duration-300">
             <p className="text-sm text-muted mb-2">INSTALLATION</p>
             <p className="text-2xl font-bold text-slate-900">No Cost</p>
             <p className="text-sm text-muted mt-2">Professional setup included</p>
           </div>
 
-          <div className="p-6 border border-slate-200 rounded-lg">
+          <div className="p-6 border border-slate-200 rounded-xl hover:border-solar-amber/20 hover:shadow-sm transition-all duration-300">
             <p className="text-sm text-muted mb-2">WARRANTY</p>
             <p className="text-2xl font-bold text-slate-900">25 Years</p>
             <p className="text-sm text-muted mt-2">Performance & production</p>
           </div>
 
-          <div className="p-6 border border-slate-200 rounded-lg">
+          <div className="p-6 border border-slate-200 rounded-xl hover:border-solar-amber/20 hover:shadow-sm transition-all duration-300">
             <p className="text-sm text-muted mb-2">ROOF PROTECTION</p>
             <p className="text-2xl font-bold text-slate-900">10 Years</p>
             <p className="text-sm text-muted mt-2">Roof-Shield leak warranty</p>

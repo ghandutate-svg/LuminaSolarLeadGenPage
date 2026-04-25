@@ -21,8 +21,28 @@ export function ImpactSection() {
     },
   };
 
+  const barVariants = {
+    hidden: { scaleY: 0 },
+    visible: () => ({
+      scaleY: 1,
+      transition: {
+        duration: 0.8,
+        delay: 0.3,
+        ease: [0.25, 0.1, 0.25, 1] as const,
+      },
+    }),
+  };
+
+  const bars = [
+    { height: '60%', gradient: 'from-red-200 to-red-300', label: '2024' },
+    { height: '75%', gradient: 'from-red-300 to-red-400', label: '2025' },
+    { height: '90%', gradient: 'from-red-400 to-red-500', label: '2026' },
+    { height: '25%', gradient: '', label: 'With Solar', isSolar: true },
+  ];
+
   return (
     <motion.section
+      id="impact"
       className="py-20 bg-cool-gray"
       initial="hidden"
       whileInView="visible"
@@ -41,24 +61,26 @@ export function ImpactSection() {
                 <p className="text-muted mb-4 leading-relaxed">
                   Watch your energy costs stabilize while utility rates continue to climb.
                 </p>
-                <div className="h-48 bg-white rounded-lg p-6 border border-slate-200">
+                <div className="h-48 bg-white rounded-lg p-6 border border-slate-200 overflow-hidden">
                   <div className="flex items-end justify-between h-full gap-2">
-                    <div className="flex flex-col items-center flex-1">
-                      <div className="w-full bg-gradient-to-t from-red-200 to-red-300 rounded" style={{ height: '60%' }} />
-                      <span className="text-xs text-muted mt-2">2024</span>
-                    </div>
-                    <div className="flex flex-col items-center flex-1">
-                      <div className="w-full bg-gradient-to-t from-red-300 to-red-400 rounded" style={{ height: '75%' }} />
-                      <span className="text-xs text-muted mt-2">2025</span>
-                    </div>
-                    <div className="flex flex-col items-center flex-1">
-                      <div className="w-full bg-gradient-to-t from-red-400 to-red-500 rounded" style={{ height: '90%' }} />
-                      <span className="text-xs text-muted mt-2">2026</span>
-                    </div>
-                    <div className="flex flex-col items-center flex-1">
-                      <div className="w-full bg-solar-amber rounded" style={{ height: '25%' }} />
-                      <span className="text-xs text-muted mt-2">With Solar</span>
-                    </div>
+                    {bars.map((bar, index) => (
+                      <div key={index} className="flex flex-col items-center flex-1 h-full justify-end">
+                        <motion.div
+                          className={`w-full rounded origin-bottom ${
+                            bar.isSolar
+                              ? 'bg-solar-amber'
+                              : `bg-gradient-to-t ${bar.gradient}`
+                          }`}
+                          style={{ height: bar.height }}
+                          custom={bar.height}
+                          variants={barVariants}
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: true }}
+                        />
+                        <span className="text-xs text-muted mt-2">{bar.label}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <div className="flex gap-6 mt-6 text-sm">
@@ -74,7 +96,7 @@ export function ImpactSection() {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <div className="bg-white p-8 rounded-lg border border-slate-200">
+            <div className="bg-white p-8 rounded-lg border border-slate-200 hover:shadow-md transition-shadow duration-300">
               <div className="flex items-start gap-4 mb-6">
                 <TrendingUp className="w-6 h-6 text-solar-amber flex-shrink-0 mt-1" strokeWidth={1.5} />
                 <div>
